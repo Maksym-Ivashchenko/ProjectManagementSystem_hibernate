@@ -7,38 +7,11 @@ import ua.goit.homeworkhibernate.model.dao.DevelopersDao;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DevelopersRepository implements Repository<DevelopersDao> {
     private final HibernateProvider connector;
-    private static final String INSERT = "INSERT INTO developers (developer_name, age, gender, " +
-            "different, salary) VALUES (?, ?, ?, ?, ?);";
-    private static final String SELECT_BY_ID = "SELECT id, developer_name, age, gender, different, salary" +
-            " FROM developers WHERE id = ?;";
-    private static final String UPDATE_BY_ID = "UPDATE developers" +
-            " SET developer_name = ?, age = ?, gender = ?, different = ?, salary = ?" +
-            " WHERE id = ?;";
-    private static final String DELETE_BY_ID = "DELETE FROM developers WHERE id = ?;";
-    private static final String SELECT_ALL = "SELECT id, developer_name, age, gender, different, salary " +
-            "FROM developers;";
-    private static final String LIST_OF_ALL_DEVELOPERS_BY_BRANCH =
-            "SELECT d.id, d.developer_name, d.age, d.gender, d.different, d.salary FROM developers AS d" +
-                    " JOIN developers_skills AS ds ON d.id = ds.developer_id" +
-                    " JOIN skills AS s ON s.id = ds.skill_id" +
-                    " WHERE s.branch = ?;";
-    private static final String LIST_OF_ALL_DEVELOPERS_BY_SKILL_LEVEL =
-            "SELECT d.id, d.developer_name, d.age, d.gender, d.different, d.salary FROM developers AS d" +
-                    " JOIN developers_skills AS ds ON d.id = ds.developer_id" +
-                    " JOIN skills AS s ON s.id = ds.skill_id" +
-                    " WHERE s.skill_level = ?;";
-    private static final String LIST_OF_PROJECT_DEVELOPERS =
-            "SELECT d.id, d.developer_name, d.age, d.gender, d.different, d.salary FROM developers AS d" +
-                    " JOIN developers_projects AS dp ON d.id = dp.developer_id" +
-                    " JOIN projects AS p ON p.id = dp.project_id" +
-                    " WHERE p.project_name = ?;";
 
     public DevelopersRepository(HibernateProvider connector) {
         this.connector = connector;
@@ -91,7 +64,7 @@ public class DevelopersRepository implements Repository<DevelopersDao> {
         List<DevelopersDao> daoList = new ArrayList<>();
         try(Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
-            daoList = loadAllData(DevelopersDao.class, session);
+            daoList = loadAllData(session);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,11 +114,10 @@ public class DevelopersRepository implements Repository<DevelopersDao> {
         return daoList;
     }
 
-    private static <T> List<T> loadAllData(Class<T> type, Session session) {
+    private static List<DevelopersDao> loadAllData(Session session) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(type);
-        criteria.from(type);
-        List<T> data = session.createQuery(criteria).getResultList();
-        return data;
+        CriteriaQuery<DevelopersDao> criteria = builder.createQuery(DevelopersDao.class);
+        criteria.from(DevelopersDao.class);
+        return session.createQuery(criteria).getResultList();
     }
 }

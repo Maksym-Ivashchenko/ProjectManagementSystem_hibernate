@@ -1,8 +1,11 @@
 package ua.goit.homeworkhibernate.model.dao;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "skills")
 public class SkillsDao {
     Integer id;
     String branch;
@@ -23,6 +26,8 @@ public class SkillsDao {
         this.skillLevel = skillLevel;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -31,6 +36,7 @@ public class SkillsDao {
         this.id = id;
     }
 
+    @Column(name = "branch", length = 45)
     public String getBranch() {
         return branch;
     }
@@ -39,6 +45,7 @@ public class SkillsDao {
         this.branch = branch;
     }
 
+    @Column(name = "skill_level", length = 45)
     public String getSkillLevel() {
         return skillLevel;
     }
@@ -47,6 +54,7 @@ public class SkillsDao {
         this.skillLevel = skillLevel;
     }
 
+    @ManyToMany(mappedBy = "skills")
     public Set<DevelopersDao> getDevelopers() {
         return developers;
     }

@@ -1,9 +1,12 @@
 package ua.goit.homeworkhibernate.model.dao;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "projects")
 public class ProjectsDao {
     Integer id;
     String projectName;
@@ -35,6 +38,8 @@ public class ProjectsDao {
         this.dateCreated = dateCreated;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -43,6 +48,7 @@ public class ProjectsDao {
         this.id = id;
     }
 
+    @Column(name = "project_name", length = 45)
     public String getProjectName() {
         return projectName;
     }
@@ -51,6 +57,7 @@ public class ProjectsDao {
         this.projectName = projectName;
     }
 
+    @Column(name = "project_type", length = 45)
     public String getProjectType() {
         return projectType;
     }
@@ -59,6 +66,7 @@ public class ProjectsDao {
         this.projectType = projectType;
     }
 
+    @Column(name = "comments", length = 45)
     public String getComments() {
         return comments;
     }
@@ -67,6 +75,7 @@ public class ProjectsDao {
         this.comments = comments;
     }
 
+    @Column(name = "cost")
     public Integer getCost() {
         return cost;
     }
@@ -75,6 +84,7 @@ public class ProjectsDao {
         this.cost = cost;
     }
 
+    @Column(name = "date_created")
     public LocalDate getDateCreated() {
         return dateCreated;
     }
@@ -83,10 +93,12 @@ public class ProjectsDao {
         this.dateCreated = dateCreated;
     }
 
+    @ManyToMany(mappedBy = "projects")
     public Set<DevelopersDao> getDevelopers() {
         return developers;
     }
 
+    @ManyToMany(mappedBy = "projects")
     public Set<CompaniesDao> getCompanies() {
         return companies;
     }
@@ -99,6 +111,7 @@ public class ProjectsDao {
         this.developers = developers;
     }
 
+    @ManyToMany(mappedBy = "projects")
     public Set<CustomersDao> getCustomers() {
         return customers;
     }

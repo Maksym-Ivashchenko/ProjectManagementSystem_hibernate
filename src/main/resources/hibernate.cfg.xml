@@ -14,8 +14,10 @@
         <property name="hbm2ddl.auto">validate</property>
         <property name="enable_lazy_load_no_trans">true</property>
 
-        <mapping resource="DevelopersDao.hbm.xml"/>
-        <mapping resource="ProjectsDao.hbm.xml"/>
-        <mapping resource="SkillsDao.hbm.xml"/>
+        <mapping class="ua.goit.homeworkhibernate.model.dao.DevelopersDao"/>
+        <mapping class="ua.goit.homeworkhibernate.model.dao.ProjectsDao"/>
+        <mapping class="ua.goit.homeworkhibernate.model.dao.SkillsDao"/>
+        <mapping class="ua.goit.homeworkhibernate.model.dao.CompaniesDao"/>
+        <mapping class="ua.goit.homeworkhibernate.model.dao.CustomersDao"/>
     </session-factory>
 </hibernate-configuration>

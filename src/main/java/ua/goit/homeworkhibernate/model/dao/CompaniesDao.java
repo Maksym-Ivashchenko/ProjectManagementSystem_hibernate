@@ -1,8 +1,11 @@
 package ua.goit.homeworkhibernate.model.dao;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "companies")
 public class CompaniesDao {
     Integer id;
     String companyName;
@@ -26,6 +29,8 @@ public class CompaniesDao {
         this.email = email;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -34,6 +39,7 @@ public class CompaniesDao {
         this.id = id;
     }
 
+    @Column(name = "company_name", length = 45)
     public String getCompanyName() {
         return companyName;
     }
@@ -42,6 +48,7 @@ public class CompaniesDao {
         this.companyName = companyName;
     }
 
+    @Column(name = "city", length = 45)
     public String getCity() {
         return city;
     }
@@ -50,6 +57,7 @@ public class CompaniesDao {
         this.city = city;
     }
 
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -58,6 +66,10 @@ public class CompaniesDao {
         this.email = email;
     }
 
+    @ManyToMany
+    @JoinTable(name = "companies_projects",
+            joinColumns = {@JoinColumn(name = "company_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
     public Set<ProjectsDao> getProjects() {
         return projects;
     }

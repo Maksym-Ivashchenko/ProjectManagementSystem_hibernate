@@ -1,8 +1,11 @@
 package ua.goit.homeworkhibernate.model.dao;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "developers")
 public class DevelopersDao {
     Integer id;
     String developerName;
@@ -34,6 +37,8 @@ public class DevelopersDao {
         this.salary = salary;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -42,6 +47,7 @@ public class DevelopersDao {
         this.id = id;
     }
 
+    @Column(name = "developer_name", length = 45)
     public String getDeveloperName() {
         return developerName;
     }
@@ -50,6 +56,7 @@ public class DevelopersDao {
         this.developerName = developerName;
     }
 
+    @Column(name = "age")
     public Integer getAge() {
         return age;
     }
@@ -58,6 +65,7 @@ public class DevelopersDao {
         this.age = age;
     }
 
+    @Column(name = "gender", length = 45)
     public String getGender() {
         return gender;
     }
@@ -66,6 +74,7 @@ public class DevelopersDao {
         this.gender = gender;
     }
 
+    @Column(name = "different", length = 200)
     public String getDifferent() {
         return different;
     }
@@ -74,6 +83,7 @@ public class DevelopersDao {
         this.different = different;
     }
 
+    @Column(name = "salary")
     public Integer getSalary() {
         return salary;
     }
@@ -82,6 +92,10 @@ public class DevelopersDao {
         this.salary = salary;
     }
 
+    @ManyToMany
+    @JoinTable(name = "developers_projects",
+            joinColumns = {@JoinColumn(name = "developer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
     public Set<ProjectsDao> getProjects() {
         return projects;
     }
@@ -90,6 +104,10 @@ public class DevelopersDao {
         this.projects = projects;
     }
 
+    @ManyToMany
+    @JoinTable(name = "developers_skills",
+            joinColumns = {@JoinColumn(name = "developer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "skill_id")})
     public Set<SkillsDao> getSkills() {
         return skills;
     }
