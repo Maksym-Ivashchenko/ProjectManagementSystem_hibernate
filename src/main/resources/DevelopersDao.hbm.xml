@@ -1,0 +1,26 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name = "ua.goit.homeworkhibernate.model.dao.DevelopersDao" table = "DEVELOPERS">
+        <id name = "id" type = "java.lang.Integer" column = "id">
+            <generator class="increment">
+                <param name="sequence">developers_id_seq</param>
+            </generator>
+        </id>
+        <property name = "developerName" column = "developer_name" type = "string" length="45"/>
+        <property name = "age" column = "age" type = "java.lang.Integer"/>
+        <property name = "gender" column = "gender" type = "string" length="45"/>
+        <property name = "different" column = "different" type = "string" length="200"/>
+        <property name = "salary" column = "salary" type = "java.lang.Integer"/>
+        <set name="projects" table="developers_projects">
+            <key column="developer_id"/>
+            <many-to-many column="project_id" class="ua.goit.homeworkhibernate.model.dao.ProjectsDao"/>
+        </set>
+        <set name="skills" table="developers_skills">
+            <key column="developer_id"/>
+            <many-to-many column="skill_id" class="ua.goit.homeworkhibernate.model.dao.SkillsDao"/>
+        </set>
+    </class>
+</hibernate-mapping>

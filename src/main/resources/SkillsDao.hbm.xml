@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name = "ua.goit.homeworkhibernate.model.dao.SkillsDao" table = "SKILLS">
+        <id name = "id" type = "java.lang.Integer" column = "id">
+            <generator class="increment">
+                <param name="sequence">developers_id_seq</param>
+            </generator>
+        </id>
+        <property name = "branch" column = "branch" type = "string" length="45"/>
+        <property name = "skillLevel" column = "skill_level" type = "string" length="45"/>
+        <set name="developers" table="developers_skills">
+            <key column="skill_id"/>
+            <many-to-many column="developer_id" class="ua.goit.homeworkhibernate.model.dao.DevelopersDao"/>
+        </set>
+    </class>
+</hibernate-mapping>
