@@ -1,6 +1,5 @@
 package ua.goit.homeworkhibernate.controller;
 
-import org.hibernate.mapping.Set;
 import ua.goit.homeworkhibernate.config.HibernateProvider;
 import ua.goit.homeworkhibernate.model.dto.ProjectsDto;
 import ua.goit.homeworkhibernate.repository.ProjectsRepository;
@@ -66,7 +65,7 @@ public class ProjectController extends HttpServlet {
         } else if (action.matches("/delete")) {
             doDelete(req, resp);
         } else if (action.matches("/format")) {
-            List<String[]> listOfProjectsInTheFormat = projectsService.getListOfProjectsInTheFormat();
+            List<Object[]> listOfProjectsInTheFormat = projectsService.getListOfProjectsInTheFormat();
             req.setAttribute("projects", listOfProjectsInTheFormat);
             req.getRequestDispatcher("/view/getListOfProjectsInTheFormat.jsp").forward(req, resp);
             if (listOfProjectsInTheFormat.isEmpty()) {

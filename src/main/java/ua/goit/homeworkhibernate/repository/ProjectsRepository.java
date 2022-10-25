@@ -19,7 +19,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
 
     @Override
     public ProjectsDao save(ProjectsDao entity) {
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -31,7 +31,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
 
     @Override
     public ProjectsDao update(ProjectsDao entity) {
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.update(entity);
             transaction.commit();
@@ -43,7 +43,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
 
     @Override
     public void delete(ProjectsDao entity) {
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.delete(entity);
             transaction.commit();
@@ -55,7 +55,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
     @Override
     public ProjectsDao findById(Integer id) {
         ProjectsDao projectsDao = new ProjectsDao();
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
             projectsDao = session.load(ProjectsDao.class, id);
             transaction.commit();
@@ -68,7 +68,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
     @Override
     public List<ProjectsDao> findAll() {
         List<ProjectsDao> daoList = new ArrayList<>();
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             Transaction transaction = session.beginTransaction();
             daoList = loadAllData(session);
             transaction.commit();
@@ -80,7 +80,7 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
 
     public Integer getSalaryOfAllDevelopersFromProject(String projectName) {
         int sumSalary = -1;
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             sumSalary = session
                     .createQuery("SELECT d.salary FROM DevelopersDao d INNER JOIN d.projects p" +
                             " WHERE p.projectName = :projectName", Integer.class)
@@ -92,14 +92,14 @@ public class ProjectsRepository implements Repository<ProjectsDao> {
         return sumSalary;
     }
 
-    public List<String[]> getListOfProjectsInTheFormat() {
-        List<String[]> resultList = new ArrayList<>();
+    public List<Object[]> getListOfProjectsInTheFormat() {
+        List<Object[]> resultList = new ArrayList<>();
 
-        try(Session session = connector.openSession()) {
+        try (Session session = connector.openSession()) {
             resultList = session
-                    .createQuery("SELECT p.dateCreated, p.projectName, COUNT(d.developerName)" +
+                    .createQuery("SELECT p.dateCreated, p.projectName, COUNT(distinct d.developerName)" +
                             " FROM ProjectsDao p INNER JOIN p.developers d GROUP BY p.dateCreated, p.projectName" +
-                            " ORDER BY p.projectName", String[].class)
+                            " ORDER BY p.projectName", Object[].class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
