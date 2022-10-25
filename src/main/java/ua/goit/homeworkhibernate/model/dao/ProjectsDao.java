@@ -93,7 +93,10 @@ public class ProjectsDao {
         this.dateCreated = dateCreated;
     }
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany
+    @JoinTable(name = "developers_projects",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "developer_id")})
     public Set<DevelopersDao> getDevelopers() {
         return developers;
     }

@@ -92,10 +92,7 @@ public class DevelopersDao {
         this.salary = salary;
     }
 
-    @ManyToMany
-    @JoinTable(name = "developers_projects",
-            joinColumns = {@JoinColumn(name = "developer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    @ManyToMany(mappedBy = "developers")
     public Set<ProjectsDao> getProjects() {
         return projects;
     }

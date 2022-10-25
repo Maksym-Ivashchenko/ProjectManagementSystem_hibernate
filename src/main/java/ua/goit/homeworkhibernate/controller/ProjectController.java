@@ -1,5 +1,6 @@
 package ua.goit.homeworkhibernate.controller;
 
+import org.hibernate.mapping.Set;
 import ua.goit.homeworkhibernate.config.HibernateProvider;
 import ua.goit.homeworkhibernate.model.dto.ProjectsDto;
 import ua.goit.homeworkhibernate.repository.ProjectsRepository;
@@ -16,7 +17,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 
 @WebServlet(urlPatterns = "/projects/*")
 public class ProjectController extends HttpServlet {
@@ -66,7 +66,7 @@ public class ProjectController extends HttpServlet {
         } else if (action.matches("/delete")) {
             doDelete(req, resp);
         } else if (action.matches("/format")) {
-            List<List<String>> listOfProjectsInTheFormat = projectsService.getListOfProjectsInTheFormat();
+            List<String[]> listOfProjectsInTheFormat = projectsService.getListOfProjectsInTheFormat();
             req.setAttribute("projects", listOfProjectsInTheFormat);
             req.getRequestDispatcher("/view/getListOfProjectsInTheFormat.jsp").forward(req, resp);
             if (listOfProjectsInTheFormat.isEmpty()) {

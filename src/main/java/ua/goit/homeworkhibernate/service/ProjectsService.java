@@ -1,5 +1,6 @@
 package ua.goit.homeworkhibernate.service;
 
+import org.hibernate.mapping.Set;
 import ua.goit.homeworkhibernate.model.dao.ProjectsDao;
 import ua.goit.homeworkhibernate.model.dto.ProjectsDto;
 import ua.goit.homeworkhibernate.repository.ProjectsRepository;
@@ -54,7 +55,7 @@ public class ProjectsService implements Service<ProjectsDto> {
         return projectsRepository.getSalaryOfAllDevelopersFromProject(projectName);
     }
 
-    public List<List<String>> getListOfProjectsInTheFormat() {
+    public List<String[]> getListOfProjectsInTheFormat() {
         return projectsRepository.getListOfProjectsInTheFormat();
     }
 }

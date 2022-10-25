@@ -32,7 +32,13 @@
       <console name="goit_dev" type="STANDARD" schema="goit_dev" session="Main"><![CDATA[SELECT d.id, d.developer_name, d.age, d.gender, d.different, d.salary FROM developers AS d
                     JOIN developers_projects AS dp ON d.id = dp.developer_id
                     JOIN projects AS p ON p.id = dp.project_id
-                    WHERE p.project_name = 'Project_3';]]></console>
+                    WHERE p.project_name = 'Project_3';
+
+SELECT p.date_created, p.project_name, COUNT(d.developer_name) FROM projects AS p
+            JOIN developers_projects AS dp ON p.id = dp.project_id
+            JOIN developers AS d ON d.id = dp.developer_id
+            GROUP BY p.date_created, p.project_name 
+            ORDER BY p.project_name;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

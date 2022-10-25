@@ -76,8 +76,8 @@ public class DevelopersRepository implements Repository<DevelopersDao> {
         List<DevelopersDao> daoList = new ArrayList<>();
         try(Session session = connector.openSession()) {
             return daoList = session
-                    .createQuery("SELECT d FROM DevelopersDao d INNER JOIN d.skills s WHERE s.branch = :branch",
-                            DevelopersDao.class)
+                    .createQuery("SELECT d FROM DevelopersDao d INNER JOIN d.skills s" +
+                            " WHERE s.branch = :branch", DevelopersDao.class)
                     .setParameter("branch", branch)
                     .getResultList();
         } catch (Exception e) {
